@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "User Administration";
+}
+
+<h2>@ViewBag.Message</h2>
+
+
+@using (Html.BeginForm("Search", "User"))
+{
+<p>
+    @Html.ActionLink("Create New User", "Create")
+</p>
+<p>
+    @Html.TextBox("Search")
+    <input type="submit" value="Search" />    
+</p>
+<table>
+    <thead>
+        <tr>
+            <th>
+                User ID
+            </th>
+            <th>
+                Email Address
+            </th>
+            <th>
+                Last Login
+            </th>
+            <th>
+                Role
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                &nbsp;
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var user in Model.People)
+{
+        <tr>
+            <td>@user.ID @Html.Hidden("IDs", @user.ID as object)</td>
+            <td>@user.Email</td>
+            <td>@user.LastUpdate</td>
+            <td>@(user.IsAdmin ? "Admin" : "User")</td>
+            <td>@(user.IsActive ? "Active" : "Suspend")</td>
+            <td align="center">
+                @if (Model.CurrentUser.ID != user.ID)
+                {
+                    if (user.IsActive)
+                    {
+                        @Html.ActionLink("Suspend", "Suspend", new { id = user.ID })           
+                    }
+                    if (!user.IsActive)
+                    {
+                        @Html.ActionLink("Activate", "Activate", new { id = user.ID })
+                    }
+                    <span> | </span>                    
+                    @Html.ActionLink("Delete", "Delete", new { id = user.ID }, new{ @class = "delete"})
+                }
+            </td>
+        </tr>
+}
+        <tr>
+            <td colspan="6" align="center">
+                <span></span>
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    if (i != Model.CurrentPage)
+                    {
+                        @Html.ActionLink(i.ToString(), "Index", new { pageNum = i })
+                        
+                    }
+                    else
+                    {
+                        @i
+                    }
+                    <span></span>
+                }
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+    
+}
+
+<form method="post" id="deleteForm" action="">
+</form>
+<script type="text/javascript">
+    $('document').ready(function () {
+        $('a.delete').click(function () {
+            var link = this.href;
+            if (confirm('You sure?')) {
+                $('#deleteForm').attr('action', link);
+                $('#deleteForm').submit(); //jquery
+            }
+            return false;
+        });
+    });
+</script>	

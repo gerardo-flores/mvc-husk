@@ -1,0 +1,88 @@
+﻿@model MVC_Husk.Model.SeasonalProductsViewModel
+
+@{
+    ViewBag.Title = "Seasonal Products pageable, sortable grid";
+}
+
+@section pageJS{
+    <script src="@Url.Content("~/Public/javascripts/grid.js")" type="text/javascript" ></script>
+}
+
+<h2>Seasonal Products Grid</h2>
+
+<table id="grid"></table>
+<div id="pager"></div>
+
+<br />
+<br />
+
+<div id="chartdiv" style="height:400px;width:300px; "></div>
+
+<script type="text/javascript">
+    $.jqplot('chartdiv', [[[1, 2], [3, 5.12], [5, 13.1], [7, 33.6], [9, 85.9], [11, 219.9]]], { title: 'Exponential Line',
+        axes: { yaxis: { min: -10, max: 240} },
+        series: [{ color: '#5FAB78'}]
+    });
+</script>
+
+<br />
+
+@using (Html.BeginForm("UploadFile", "SeasonalProducts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" value="Upload File" />
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Week
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Seasonality Index
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Products) {
+    <tr>
+        <td>
+            @item.Week.ToString("dd MMM yyyy")
+        </td>
+        <td>
+            @item.Category
+        </td>
+        <td>
+            @item.SeasonalityIndex
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "delete" })
+        </td>
+    </tr>
+}
+
+</table>
+
+<form method="post" id="deleteForm" action="">
+</form>
+<script type="text/javascript">
+    $('document').ready(function () {
+        $('a.delete').click(function () {
+            var link = this.href;
+            if (confirm('You sure?')) {
+                $('#deleteForm').attr('action', link);
+                $('#deleteForm').submit(); //jquery
+            }
+            return false;
+        });
+    });
+</script>	

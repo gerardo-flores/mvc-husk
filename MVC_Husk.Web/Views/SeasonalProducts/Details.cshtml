@@ -1,0 +1,29 @@
+﻿@model MVC_Husk.Model.SeasonalProducts
+
+@{
+    ViewBag.Title = "Seasonal Product Details";
+}
+
+<h2>Details</h2>
+<fieldset>
+    <legend>Seasonal Product</legend>
+
+    <div class="display-label">Week</div>
+    <div class="display-field">
+        @Model.Week.ToString()
+    </div>
+
+    <div class="display-label">Category</div>
+    <div class="display-field">
+        @Model.Category
+    </div>
+
+    <div class="display-label">IDX</div>
+    <div class="display-field">
+        @Model.SeasonalityIndex.ToString()
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
