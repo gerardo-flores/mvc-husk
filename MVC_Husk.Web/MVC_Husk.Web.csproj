@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\SeasonalProductsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Model\SeasonalProduct.cs" />
     <Compile Include="ViewModels\SeasonalProductsViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
+    <Content Include="App_Data\DB\HuskDev.sdf" />
     <Content Include="Data\LICENSE.txt" />
     <Compile Include="Data\Massive.cs" />
     <Compile Include="App_Start\NinjectMVC3.cs" />

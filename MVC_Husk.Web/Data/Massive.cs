@@ -115,14 +115,17 @@ namespace MVC_Husk.Data
     {
         DbProviderFactory _factory;
         string _connectionString;
+        string _providerName;
 
         public DynamicModel(string connectionStringName, string tableName = "", string primaryKeyField = "")
         {
             TableName = tableName == "" ? this.GetType().Name : tableName;
             PrimaryKeyField = string.IsNullOrEmpty(primaryKeyField) ? "ID" : primaryKeyField;
-            var _providerName = "System.Data.SqlClient";
-            _factory = DbProviderFactories.GetFactory(_providerName);
             _connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
+            _providerName = ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName;
+            if (String.IsNullOrEmpty(_providerName))
+                _providerName = "System.Data.SqlClient";
+            _factory = DbProviderFactories.GetFactory(_providerName);
         }
         /// <summary>
         /// Enumerates the reader yielding the result - thanks to Jeroen Haegebaert
@@ -428,9 +431,22 @@ namespace MVC_Husk.Data
                     where = "WHERE " + where;
                 }
             }
-            var sql = string.Format("SELECT {0} FROM (SELECT ROW_NUMBER() OVER (ORDER BY {2}) AS Row, {0} FROM {3} {4}) AS Paged ", columns, pageSize, orderBy, TableName, where);
-            var pageStart = (currentPage - 1) * pageSize;
-            sql += string.Format(" WHERE Row > {0} AND Row <={1}", pageStart, (pageStart + pageSize));
+
+            string sql;
+
+            if (_providerName == "System.Data.SqlServerCE.4.0")
+            {
+                var pageNum = (currentPage - 1) * pageSize;
+                sql = string.Format("SELECT {0} FROM {1} {2} ORDER BY {3} OFFSET {4} ROWS FETCH NEXT {5} ROWS ONLY", columns, TableName, where, orderBy, pageNum, pageSize);
+            }
+            else
+            {
+                sql = string.Format("SELECT {0} FROM (SELECT ROW_NUMBER() OVER (ORDER BY {2}) AS Row, {0} FROM {3} {4}) AS Paged ", columns, pageSize, orderBy, TableName, where);
+
+                var pageStart = (currentPage - 1) * pageSize;
+                sql += string.Format(" WHERE Row > {0} AND Row <={1}", pageStart, (pageStart + pageSize));
+            }
+            
             countSQL += where;
             result.TotalRecords = Scalar(countSQL, args);
             result.TotalPages = result.TotalRecords / pageSize;
