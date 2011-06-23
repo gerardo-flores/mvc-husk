@@ -68,12 +68,13 @@ namespace MVC_Husk.Controllers
         {
             var products = _product.Paged(orderBy: sidx + " " + sord, currentPage: page, pageSize: rows);
 
-            Logger.LogDebug("Seasonal grid data requested with page number " + page.ToString() + ", pageSize " + rows.ToString() + " and totalRecords " + products.TotalRecords);
+            Logger.LogDebug("Seasonal grid data requested with page number " + page + ", pageSize " + rows + " and totalRecords " + products.TotalRecords);
 
             List<dynamic> items = new List<dynamic>();
             foreach (var item in products.Items)
             {
-                items.Add(new {item.ID, item.Week, item.Category, item.SeasonalityIndex});
+                string Week = item.Week.ToShortDateString();
+                items.Add(new {item.ID, Week, item.Category, item.SeasonalityIndex});
             }
 
             var jsonData = new
