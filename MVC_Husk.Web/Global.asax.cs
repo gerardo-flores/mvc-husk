@@ -20,6 +20,7 @@ namespace MVC_Husk
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("quartz/{*pathInfo}");
 
             routes.MapRoute(
                 "Default", // Route name

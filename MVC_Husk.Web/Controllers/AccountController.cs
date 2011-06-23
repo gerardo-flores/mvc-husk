@@ -39,7 +39,7 @@ namespace MVC_Husk.Controllers
         /// <param name="password">The Password of the User</param>
         /// <returns>Action to either the Home Page or back to the LogOn Page</returns>
         [HttpPost]
-        public ActionResult LogOn(string email, string password)
+        public ActionResult LogOn(string email, string password, string ReturnUrl = null)
         {
             var result = _users.Login(email, password);
             if (result.Authenticated)
@@ -52,7 +52,10 @@ namespace MVC_Husk.Controllers
                 if (result.User.IsFirstVisit)
                     return View("ClickThru");
 
-                return RedirectToAction("Index", "Home");
+                if (string.IsNullOrEmpty(ReturnUrl))
+                    return RedirectToAction("Index", "Home");
+                else
+                    return Redirect(ReturnUrl);
             }
             else
             {

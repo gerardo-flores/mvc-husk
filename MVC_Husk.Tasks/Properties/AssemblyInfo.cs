@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MVC_Husk.Tasks")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Accenture")]
+[assembly: AssemblyCompany("McKinsey")]
 [assembly: AssemblyProduct("MVC_Husk.Tasks")]
-[assembly: AssemblyCopyright("Copyright © Accenture 2011")]
+[assembly: AssemblyCopyright("Copyright © McKinsey 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

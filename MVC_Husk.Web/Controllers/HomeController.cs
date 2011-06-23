@@ -19,25 +19,8 @@ namespace MVC_Husk.Controllers
 
         public ActionResult Index()
         {
-            _logger.LogInfo("Logging this");
-
-            var table = new Users();
-            var users = table.All();
-
-            var viewModel = new UsersViewModel
-            {
-                People = users
-            };
-           
-            if (ViewBag.Message == null)
-                ViewBag.Message = "Welcome!";
-
-            return View(viewModel);
-        }
-
-        public ActionResult About()
-        {
             return View();
         }
+
     }
 }

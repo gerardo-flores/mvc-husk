@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("McKinsey")]
 [assembly: AssemblyProduct("MVC_Husk")]
-[assembly: AssemblyCopyright("McKinsey © Accenture 2011")]
+[assembly: AssemblyCopyright("McKinsey © 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

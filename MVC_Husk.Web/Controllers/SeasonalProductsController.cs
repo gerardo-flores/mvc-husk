@@ -49,9 +49,6 @@ namespace MVC_Husk.Controllers
 
                 Logger.LogDebug("file was saved locally to " + path);
 
-                //TaskFactory factory = HttpRuntime.Cache.Get("BackgroundTaskScheduler") as TaskFactory;
-                //factory.StartNew( () => SeasonalProduct.LoadFileData(path));
-
                 _jobManager.LoadDataJob("SeasonalProducts", path);
                 Logger.LogDebug("The background load of SeasonalProducts was successfully queued");
             }
@@ -62,14 +59,14 @@ namespace MVC_Husk.Controllers
         /// <summary>
         /// The basic jqGrid Query and Pagination
         /// </summary>
-        /// <param name="sortColumn">The column to sort by, default is the order the values were entered</param>
-        /// <param name="sortOrder">Ascending or Decending sort order, default is ASC</param>
+        /// <param name="sidx">The column to sort by, default is the order the values were entered</param>
+        /// <param name="sord">Ascending or Decending sort order, default is ASC</param>
         /// <param name="page">The page number, default is 1</param>
         /// <param name="rows">The page size, default is 10</param>
         /// <returns></returns>
-        public JsonResult GridData(string sortColumn = "ID", string sortOrder = "asc", int page = 1, int rows = 10)
+        public JsonResult GridData(string sidx = "ID", string sord = "asc", int page = 1, int rows = 10)
         {
-            var products = _product.Paged(orderBy: sortColumn + " " + sortOrder, currentPage: page, pageSize: rows);
+            var products = _product.Paged(orderBy: sidx + " " + sord, currentPage: page, pageSize: rows);
 
             Logger.LogDebug("Seasonal grid data requested with page number " + page.ToString() + ", pageSize " + rows.ToString() + " and totalRecords " + products.TotalRecords);
 
