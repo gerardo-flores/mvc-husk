@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿//
+//  Copyright Info
+//
+
+using System.Web.Mvc;
 using System.Web.Routing;
 using Ninject;
 using MVC_Husk.Controllers;
@@ -24,7 +28,15 @@ namespace MVC_Husk.Infrastructure.Attributes
                 }
                 else
                 {
-                    if (new Users().Single(id).IsFirstVisit)
+                    var user = new Users().Single(id);
+
+                    if (user == null)
+                    {
+                        IdStore.RemoveClientAccess();
+                        return;
+                    }
+
+                    if (user.IsFirstVisit)
                     {
                         filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "ClickThru" }, { "controller", "Account" } });
                     }

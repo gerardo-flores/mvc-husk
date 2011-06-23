@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿//
+//  Copyright Info
+//
+
+using System.Web.Mvc;
 using System.Web.Routing;
 using Ninject;
 using MVC_Husk.Controllers;
