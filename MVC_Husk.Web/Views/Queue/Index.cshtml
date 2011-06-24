@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@ViewBag.Message</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Created At
+            </th>
+            <th>
+                Uploaded By
+            </th>
+            <th>
+                Description
+            </th>            
+            <th>
+                Priority
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var job in Model.Jobs)
+{
+        <tr>
+            <td>@job.CreatedAt</td>
+            <td>@job.UploadedBy</td>
+            <td>@job.Description</td>
+            <td>@job.Priority</td>
+            <td>@job.Status</td>
+        </tr>
+}
+    </tbody>
+</table>
