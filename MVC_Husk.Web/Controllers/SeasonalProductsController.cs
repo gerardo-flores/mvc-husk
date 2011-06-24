@@ -49,7 +49,7 @@ namespace MVC_Husk.Controllers
 
                 Logger.LogDebug("file was saved locally to " + path);
 
-                _jobManager.LoadDataJob("SeasonalProducts", path);
+                _jobManager.LoadDataJob("SeasonalProducts", path, CurrentUser);
                 Logger.LogDebug("The background load of SeasonalProducts was successfully queued");
             }
 

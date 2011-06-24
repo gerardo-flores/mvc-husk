@@ -12,6 +12,7 @@ using System.Reflection;
 using Ninject;
 using MVC_Husk.Infrastructure.Logging;
 using QuartzNetWebConsole;
+using MVC_Husk.Model;
 
 namespace MVC_Husk.Infrastructure.BackgroundJobs
 {
@@ -19,9 +20,11 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
     {
         private IScheduler _scheduler;
         private MVC_Husk.Infrastructure.Logging.ILogger _logger;
+        private Jobs _jobs;
 
         public BackgroundJobManager(MVC_Husk.Infrastructure.Logging.ILogger logger, IScheduler sched)
         {
+            _jobs = new Jobs();
             _logger = logger;
             _scheduler = sched;
 
@@ -33,14 +36,15 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
             }
         }
 
-        public void LoadDataJob(string model, string path)
+        public void LoadDataJob(string model, string path, dynamic user)
         {
             string typeName = "MVC_Husk.Infrastructure.BackgroundJobs.Load" + model + "Job";
             Type temp = Type.GetType(typeName);
 
             if (temp != null)
             {
-                JobDetail details = new JobDetail("Load File for " + model + " at " + path, temp);
+                string description = "Load File for " + model + " at " + path;
+                JobDetail details = new JobDetail(description, temp);
                 details.JobDataMap["path"] = path;
                 details.Description = "Job that loads user data uploaded via the application into the database";
                 details.Group = "Data Load";
@@ -49,6 +53,7 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
                 trigger.Description = "Trigger immediately";
                 trigger.Group = "Immediate";
 
+                _jobs.CreateJob(description, 1, DateTime.Now, user.ID);
                 _scheduler.ScheduleJob(details, trigger);
             }
             else
@@ -59,9 +64,10 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
 
         }
 
-        public void LongRunningJob()
+        public void LongRunningJob(dynamic user)
         {
-            JobDetail details = new JobDetail("Long Running Task", typeof(LongRunningNotepadJob));
+            string description = "Long Running Task";
+            JobDetail details = new JobDetail(description, typeof(LongRunningNotepadJob));
             details.Description = "Long running job";
             details.Group = "External executable job";
 
@@ -69,6 +75,7 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
             trigger.Description = "Trigger immediately";
             trigger.Group = "Immediate";
 
+            _jobs.CreateJob(description, 1, DateTime.Now, user.ID);
             _scheduler.ScheduleJob(details, trigger);
         }
 

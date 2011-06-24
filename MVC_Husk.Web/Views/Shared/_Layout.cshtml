@@ -25,13 +25,7 @@
             <div id="logindisplay">
                 @Html.Partial("_LogOnPartial")
             </div>
-            <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Seasonal Products", "Index", "SeasonalProducts")</li>
-                    <li>@Html.ActionLink("User Maintenance", "Index", "User")</li>
-                </ul>
-            </nav>
+            @Html.Partial("_NavigationPartial")
         </header>
         <section id="main">
             @RenderBody()

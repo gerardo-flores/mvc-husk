@@ -15,7 +15,7 @@ jQuery(document).ready(function () {
         autowidth: true,
         height: 'auto',
         pager: jQuery('#pager'),
-        sortname: 'week',
+        sortname: 'ID',
         viewrecords: true,
         sortorder: "desc",
         caption: "Season Products",

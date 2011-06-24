@@ -91,7 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\QueueController.cs" />
     <Compile Include="Controllers\SeasonalProductsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -112,8 +112,9 @@
     <Compile Include="Infrastructure\IdStore\FormsAuthIdStore.cs" />
     <Compile Include="Infrastructure\IdStore\IIdStore.cs" />
     <Compile Include="Model\Emails.cs" />
-    <Compile Include="Model\Job.cs" />
+    <Compile Include="Model\Jobs.cs" />
     <Compile Include="Model\SeasonalProduct.cs" />
+    <Compile Include="ViewModels\JobsViewModel.cs" />
     <Compile Include="ViewModels\SeasonalProductsViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
     <Content Include="App_Data\DB\HuskDev.sdf" />
@@ -303,6 +304,8 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\SeasonalProducts\Delete.cshtml" />
+    <Content Include="Views\Queue\LongRunning.cshtml" />
+    <Content Include="Views\Queue\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

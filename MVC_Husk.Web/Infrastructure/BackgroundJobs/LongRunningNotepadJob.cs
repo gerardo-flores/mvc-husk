@@ -12,8 +12,8 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
     {
         public void Execute(JobExecutionContext context)
         {
-            Task taskC = new Task(() => { Process proc = Process.Start("notepad.exe"); proc.WaitForExit(); });
-            taskC.Start();
+            Process proc = Process.Start("notepad.exe"); 
+            proc.WaitForExit();
         }
     }
 }
