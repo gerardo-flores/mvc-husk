@@ -31,6 +31,7 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
             if (!_scheduler.IsStarted)
             {
                 _scheduler.Start();
+                _scheduler.AddGlobalJobListener(new QueueUpdateManager());
                 QuartzNetWebConsole.Setup.Scheduler = () => sched;
                 QuartzNetWebConsole.Setup.Logger = new MemoryLogger(10000);
             }
@@ -53,7 +54,8 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
                 trigger.Description = "Trigger immediately";
                 trigger.Group = "Immediate";
 
-                _jobs.CreateJob(description, 1, DateTime.Now, user.ID);
+                dynamic result = _jobs.CreateJob(description, 1, DateTime.Now, user.ID);
+                details.JobDataMap["QueueID"] = result.JobId;
                 _scheduler.ScheduleJob(details, trigger);
             }
             else
@@ -75,7 +77,8 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
             trigger.Description = "Trigger immediately";
             trigger.Group = "Immediate";
 
-            _jobs.CreateJob(description, 1, DateTime.Now, user.ID);
+            dynamic result = _jobs.CreateJob(description, 1, DateTime.Now, user.ID);
+            details.JobDataMap["QueueID"] = result.JobId;
             _scheduler.ScheduleJob(details, trigger);
         }
 

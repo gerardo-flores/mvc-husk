@@ -109,6 +109,7 @@
     <Compile Include="Infrastructure\BackgroundJobs\LongRunningNotepadJob.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Infrastructure\BackgroundJobs\QueueUpdateManager.cs" />
     <Compile Include="Infrastructure\IdStore\FormsAuthIdStore.cs" />
     <Compile Include="Infrastructure\IdStore\IIdStore.cs" />
     <Compile Include="Model\Emails.cs" />
