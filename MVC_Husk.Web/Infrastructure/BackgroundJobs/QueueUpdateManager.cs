@@ -15,7 +15,7 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
 
         public void JobExecutionVetoed(JobExecutionContext context)
         {
-            _jobs.Update(new { Status = "Stopped" }, context.JobDetail.JobDataMap["QueueID"]);
+            _jobs.Update(new { Status = "Cancelled" }, context.JobDetail.JobDataMap["QueueID"]);
 
         }
 

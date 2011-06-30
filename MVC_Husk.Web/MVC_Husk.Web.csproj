@@ -119,7 +119,6 @@
     <Compile Include="ViewModels\SeasonalProductsViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
     <Content Include="App_Data\DB\HuskDev.sdf" />
-    <Content Include="Data\LICENSE.txt" />
     <Compile Include="Data\Massive.cs" />
     <Compile Include="App_Start\NinjectMVC3.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -133,7 +132,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\glimpse.readme.txt" />
     <Content Include="Global.asax" />
     <Content Include="Public\javascripts\excanvas.min.js" />
     <Content Include="Public\javascripts\graphs.js" />

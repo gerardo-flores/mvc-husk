@@ -22,7 +22,7 @@ namespace MVC_Husk.Model
            dynamic result = new ExpandoObject();
            result.Success = false;
 
-           if (!string.IsNullOrEmpty(description) && ValidatePriority(priority))
+           if (!string.IsNullOrEmpty(description) && ValidatePriority(priority) && ValidateCreatedAt(createdAt) && ValidateUser(userID))
            {
                try
                {
@@ -32,7 +32,7 @@ namespace MVC_Husk.Model
                }
                catch (Exception ex)
                {
-                   result.Message = "No name, priority, or create date was supplied for job";
+                   result.Message = "The right columns do not exist for the Job Object";
                }
            }
            else
@@ -40,8 +40,32 @@ namespace MVC_Husk.Model
                result.Message = "The job was invalid";
            }
 
-
            return result;
+       }
+
+       private bool ValidateUser(long userID)
+       {
+           Users users = new Users();
+           dynamic result = users.Single(userID);
+
+           if (result != null)
+               return true;
+           else
+               return false;
+
+       }
+
+       private bool ValidateCreatedAt(DateTime createdAt)
+       {
+           // If week is so far in the past that it's the Min Date, then it's wrong
+           if (DateTime.MinValue == createdAt)
+               return false;
+
+           if (DateTime.Now < createdAt)
+               return false;
+
+             // Otherwise return true
+           return true;
        }
 
        private bool ValidatePriority(int priority)

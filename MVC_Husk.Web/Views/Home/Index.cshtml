@@ -1,6 +1,4 @@
-﻿@model MVC_Husk.Model.UsersViewModel
-
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
 
@@ -10,4 +8,5 @@
 <ul>
     <li>@Html.ActionLink("Grid Example with JSON data loaded by user", "Index", "SeasonalProducts")</li>
     <li><a href="quartz/index.ashx">Scheduled Jobs Manager for Quartz</a></li>
+    <li>@Html.ActionLink("User Friendly Queue dashboard", "Index", "Queue")</li>
 </ul>

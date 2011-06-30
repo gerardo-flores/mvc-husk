@@ -32,7 +32,7 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
             {
                 _scheduler.Start();
                 _scheduler.AddGlobalJobListener(new QueueUpdateManager());
-                QuartzNetWebConsole.Setup.Scheduler = () => sched;
+                QuartzNetWebConsole.Setup.Scheduler = () => _scheduler;
                 QuartzNetWebConsole.Setup.Logger = new MemoryLogger(10000);
             }
         }
@@ -40,14 +40,14 @@ namespace MVC_Husk.Infrastructure.BackgroundJobs
         public void LoadDataJob(string model, string path, dynamic user)
         {
             string typeName = "MVC_Husk.Infrastructure.BackgroundJobs.Load" + model + "Job";
-            Type temp = Type.GetType(typeName);
+            Type modelType = Type.GetType(typeName);
 
-            if (temp != null)
+            if (modelType != null)
             {
                 string description = "Load File for " + model + " at " + path;
-                JobDetail details = new JobDetail(description, temp);
+                JobDetail details = new JobDetail(description, modelType);
                 details.JobDataMap["path"] = path;
-                details.Description = "Job that loads user data uploaded via the application into the database";
+                details.Description = "Job that loads Seasonal Products data uploaded via the application into the database";
                 details.Group = "Data Load";
 
                 Trigger trigger = new SimpleTrigger("QuartzManager LoadDataJob", DateTime.Now);
